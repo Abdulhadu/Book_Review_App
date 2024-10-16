@@ -9,6 +9,7 @@ urlpatterns = [
     # Books
     path('users/', Users.as_view()),
     path('users/<int:id>/', UserDetailView.as_view()),
+    path('login/', LoginView.as_view(), name='user-login'),
     
     # Books
     path('books/', Books.as_view()),

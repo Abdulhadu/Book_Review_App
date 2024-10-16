@@ -8,7 +8,7 @@ from .models import *
 from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer, BookSerializer, ReviewSerializer, CommentSerializer
 from django.core.exceptions import PermissionDenied
-
+from django.contrib.auth import authenticate
 
 @api_view()
 def home(request):
@@ -35,6 +35,24 @@ class Users(APIView):
             response_data['token'] = token.key  
             return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]  # Allow any user to access this view
+
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        # Authenticate the user
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            # If the user is authenticated, get or create a token
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserDetailView(APIView):
 
@@ -223,7 +241,6 @@ class CommentView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-
     def put(self, request, comment_id=None):
         comment = Comment.objects.get(id=comment_id)
         # print("comment by" , comment.user)
