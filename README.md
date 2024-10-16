@@ -37,14 +37,14 @@ This project is a **Book Review Application** built using **Django** and **Djang
    git clone https://github.com/your-username/book-review-app.git
    cd book-review-app
 
-2. **Install the requirement deopendecy
+2. **Install the requirement deopendecy**:
    ```bash
    pip install -r requirements.txt
 
-3. **Apply the Migration
+3. **Apply the Migration**:
    ```bash
    python manage.py migrate
 
-3. **Run the development Server
+3. **Run the development Server**:
    ```bash
    python manage.py runserver
