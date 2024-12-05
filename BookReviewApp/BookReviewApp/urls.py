@@ -20,6 +20,8 @@ from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include('books.urls')),
-    path('api-token-auth/', views.obtain_auth_token)
+    path('auth/', include('Auth.urls')),
+    path('books/', include('Book.urls')),
+    path('bookreview/', include('BookReview.urls')),
+    path('bookcomment/', include('BookComment.urls'))
 ]
